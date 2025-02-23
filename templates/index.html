@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <title>Grok Client</title>
+</head>
+
+<body>
+    <h1>Grok Client</h1>
+    <form id="grok-form">
+        <label for="api-key">API Key:</label>
+        <input type="text" id="api-key" placeholder="Enter your API key">
+        <br>
+        <label for="prompt">Prompt:</label>
+        <input type="text" id="prompt" placeholder="Enter your prompt">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="response"></div>
+    <script>
+        document.getElementById('grok-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const api_key = document.getElementById('api-key').value;
+            const prompt = document.getElementById('prompt').value;
+            const response = await fetch('/api/grok', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt, api_key })
+            });
+            if (response.ok) {
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    const chunk = decoder.decode(value, { stream: true });
+                    document.getElementById('response').innerText += chunk;
+                    // Scroll to the bottom
+                    document.getElementById('response').scrollTop = document.getElementById('response').scrollHeight;
+                }
+            } else {
+                document.getElementById('response').innerText = `Error: ${response.status} ${response.statusText}`
+            }
+        });
+    </script>
+</body>
+
+</html>

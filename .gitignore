@@ -1,0 +1,41 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+__pycache__/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Flask
+instance/
+
+# Environment
+.env
+.env.test
+
+# IDEs and text editors
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Virtual environment
+venv/
+env/
+
+# Dependencies
+node_modules/
+bower_components/
+
+# Build artifacts
+build/
+dist/ 
