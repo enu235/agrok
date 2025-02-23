@@ -1,7 +1,12 @@
 from flask import Flask, request, Response, render_template
 from openai import OpenAI
+import os
+from dotenv import load_dotenv
 
-app = Flask(__name__)
+# Load environment variables from .env file
+load_dotenv()
+
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 def stream_from_xai(prompt, api_key):
     client = OpenAI(
@@ -29,11 +34,21 @@ def grok():
     data = request.get_json()
     prompt = data.get('prompt')
     api_key = data.get('api_key')
+    
+    # Check for API key in environment variables
+    env_api_key = os.getenv('OPENAI_API_KEY')
+    
+    if env_api_key:
+        api_key = env_api_key
+    elif not api_key:
+        return Response("API key is required", status=400)
+    
     return Response(generate_streaming_response(prompt, api_key), mimetype='text/plain')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    env_api_key = os.getenv('OPENAI_API_KEY')
+    return render_template('index.html', api_key_present=bool(env_api_key))
 
 if __name__ == '__main__':
     app.run(debug=True)  # Enable debug mode for better error logging

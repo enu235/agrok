@@ -1,26 +1,48 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grok Client</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
-    <h1>Grok Client</h1>
-    <form id="grok-form">
-        <label for="api-key">API Key:</label>
-        <input type="text" id="api-key" placeholder="Enter your API key">
-        <br>
-        <label for="prompt">Prompt:</label>
-        <input type="text" id="prompt" placeholder="Enter your prompt">
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-    <div id="response"></div>
+    <div class="container">
+        <div id="response"></div>
+        <form id="grok-form">
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input type="text" id="prompt" placeholder="Enter your prompt">
+                    <button type="submit" class="submit-button">
+                        <span class="arrow-up">&#9650;</span>
+                    </button>
+                </div>
+                <div class="options">
+                    <div class="model-select">
+                        <label for="model">Model:</label>
+                        <select id="model">
+                            <option value="model1">Model 1</option>
+                            <option value="model2">Model 2</option>
+                        </select>
+                    </div>
+                    <div class="file-attach">
+                        <label for="file">Attach File:</label>
+                        <input type="file" id="file">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <script>
         document.getElementById('grok-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const api_key = document.getElementById('api-key').value;
             const prompt = document.getElementById('prompt').value;
+            let api_key = null;
+            {% if not api_key_present %}
+                api_key = document.getElementById('api-key').value;
+            {% endif %}
             const response = await fetch('/api/grok', {
                 method: 'POST',
                 headers: {
@@ -31,10 +53,13 @@
             if (response.ok) {
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
+                document.getElementById('response').innerText = ''; // Clear previous response
                 while (true) {
                     const { done, value } = await reader.read();
                     if (done) break;
                     const chunk = decoder.decode(value, { stream: true });
+                    console.log("Received chunk:", chunk); // Debugging: log the chunk
+                    // Append text to the response
                     document.getElementById('response').innerText += chunk;
                     // Scroll to the bottom
                     document.getElementById('response').scrollTop = document.getElementById('response').scrollHeight;
@@ -42,7 +67,7 @@
             } else {
                 document.getElementById('response').innerText = `Error: ${response.status} ${response.statusText}`
             }
-        });
+        });  // end of submit event listener
     </script>
 </body>
 

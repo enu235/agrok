@@ -1,0 +1,259 @@
+/* Reset default margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Default (light mode) styles */
+:root {
+    --bg-color: #f0f0f0;
+    --text-color: #333;
+    --response-bg: white;
+    --button-bg: #4CAF50;
+    --button-hover-bg: #45a049;
+    --input-border: #ccc;
+    --input-bg: #fff;
+    --input-text-color: #333;
+    --scrollbar-track: #e0e0e0;
+    --scrollbar-thumb: #888;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #333;
+        --text-color: #f0f0f0;
+        --response-bg: #444;
+        --button-bg: #4CAF50;
+        --button-hover-bg: #45a049;
+        --input-border: #555;
+        --input-bg: #555;
+        --input-text-color: #f0f0f0;
+        --scrollbar-track: #444;
+        --scrollbar-thumb: #bbb;
+    }
+}
+
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Container for form and response */
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    max-width: 100%;
+    height: 100%;
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--button-bg);
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--input-text-color);
+    font-size: 16px;
+}
+
+button {
+    padding: 10px;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg);
+    box-shadow: 0 0 10px var(--button-bg);
+}
+
+/* Response area */
+#response {
+    background-color: var(--response-bg);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+/* Scrollbar styling for response */
+#response::-webkit-scrollbar {
+    width: 8px;
+}
+
+#response::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+#response::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    input[type="text"],
+    button {
+        font-size: 14px;
+    }
+
+    #response {
+        height: 150px;
+    }
+}
+
+/* New styles for model selection */
+.model-select {
+    margin-bottom: 15px;
+}
+
+/* New styles for file attachment */
+.file-attach {
+    margin-bottom: 15px;
+}
+
+/* New styles for the input container */
+.input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* New styles for the input wrapper */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Updated styles for the input field */
+#prompt {
+    width: 100%;
+    padding: 10px 40px 10px 10px; /* Add right padding for the submit button */
+    margin-bottom: 10px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: var(--input-bg);
+    color: var(--input-text-color);
+    min-height: 50px;
+    resize: vertical;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* New styles for the submit button */
+.submit-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* New styles for the arrow up icon */
+.arrow-up {
+    font-size: 20px;
+    color: var(--button-bg);
+}
+
+/* New styles for the options container */
+.options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* Updated styles for model selection */
+.model-select {
+    margin-right: 10px;
+}
+
+/* Updated styles for file attachment */
+.file-attach {
+    margin-left: 10px;
+}
+
+/* Updated container styles to fit the screen */
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    max-width: 100%;
+    height: 100%;
+}
+
+/* Updated body styles to ensure full screen usage */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Updated response area to fit the screen */
+#response {
+    background-color: var(--response-bg);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-y: auto;
+    flex-grow: 1;
+}
